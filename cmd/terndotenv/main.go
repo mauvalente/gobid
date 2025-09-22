@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log/slog"
 	"os/exec"
 
 	"github.com/joho/godotenv"
@@ -9,7 +10,7 @@ import (
 
 func main() {
 	if err := godotenv.Load(); err != nil {
-		panic(err)
+		slog.Warn("Something happened with godotenv")
 	}
 
 	cmd := exec.Command(

@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/gob"
 	"fmt"
+	"log/slog"
 	"net/http"
 	"os"
 	"time"
@@ -23,7 +24,7 @@ func main() {
 	gob.Register(uuid.UUID{})
 
 	if err := godotenv.Load(); err != nil {
-		panic(err)
+		slog.Warn("Something happened with godotenv")
 	}
 
 	ctx := context.Background()
