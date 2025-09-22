@@ -1,0 +1,39 @@
+@bid_host = http://localhost:3080
+
+### Signup 
+POST {{bid_host}}/api/v1/users/signup
+
+{
+    "username": "Jones",
+    "password": "123456789",
+    "bio": "Esta é a minha BIO",
+    "email": "jones@example.com"
+}
+
+
+### Logout
+POST {{bid_host}}/api/v1/users/logout
+
+
+### Login
+POST {{bid_host}}/api/v1/users/login HTTP/1.1
+Cookie: _gorilla_csrf=MTc1ODM5NjkwOXxJa3c1VlhKTmJYTlphMHhLVWpjMkswWkpTVWg2Vm5rM0syY3lXamswVlZodGVtVkpMMUZJV2xjMk5FMDlJZ289fITn0Q4P27vibXvGB6BPKPX2na74QcFQWQMvnY4lrbZP
+X-CSRF-Token: gURvtMiLMi/pBCWPN77RJkXi+8V2/NPExxjJJOpjmSGPzXsuhWFMGzgwgRRGccL5+hEHEocblwSsymj1b5AcuQ==
+Referer: same-origin
+Content-Type: application/json
+Content-Length: 59
+Accept: */*
+
+{
+    "email": "teste@example.com",
+    "password": "#Teste123"
+}
+
+
+### Get CSRF Token
+GET {{bid_host}}/api/v1/csrftoken
+
+
+### Subscribe
+
+GET ws://localhost:3080/api/v1/products/subscribe/3319b869-d333-4fb1-88a6-23774f3b6c5c
