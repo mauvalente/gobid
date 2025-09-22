@@ -2,6 +2,7 @@ package api
 
 import (
 	"errors"
+	"log/slog"
 	"net/http"
 
 	"github.com/mauvalente/go-bid/internal/jsonutils"
@@ -24,15 +25,21 @@ func (api *Api) handleSignupUser(w http.ResponseWriter, r *http.Request) {
 	)
 	if err != nil {
 		if errors.Is(err, services.ErrDuplicatedEmailOrUsername) {
+			slog.Error("Error duplicatedEmailOrUsername")
 			jsonutils.EncodeJson(w, r, http.StatusUnprocessableEntity, map[string]any{
 				"error": "invalid email or username",
 			})
 			return
 		}
-		jsonutils.EncodeJson(w, r, http.StatusOK, map[string]any{
-			"user_id": id,
+		slog.Error("Error Creating user", "error", err)
+		jsonutils.EncodeJson(w, r, http.StatusUnprocessableEntity, map[string]any{
+			"error": "unexpected error has occur",
 		})
+		return
 	}
+	jsonutils.EncodeJson(w, r, http.StatusOK, map[string]any{
+		"user_id": id,
+	})
 }
 
 func (api *Api) handleLoginUser(w http.ResponseWriter, r *http.Request) {
