@@ -21,7 +21,10 @@ func (api *Api) BindRoutes() {
 
 	// api.Router.Use(csrfMiddleware)
 
+	api.Router.Get("/health", api.handleHealthCheck)
+
 	api.Router.Route("/api", func(r chi.Router) {
+
 		r.Route("/v1", func(r chi.Router) {
 			// r.Get("/csrftoken", api.HandlerGetCSRFToken)
 			r.Route("/users", func(r chi.Router) {
