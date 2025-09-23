@@ -6,6 +6,14 @@ on:
       - main
       - hotfix
 
+# env:
+#   AWS_REGION: us-east-1
+#   APP_NAME: gobid
+#   IMAGE_TAG: latest
+#   ECR_REPO: ${{ vars.ECR_REPO }}
+#   Service_ARN: ${{ vars.APP_+RUNNER_SERVICE_ARN }}
+
+
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -71,3 +79,34 @@ jobs:
             echo "Coverage under minimum ($$MIN%)"
             exit 1
           fi
+
+  # deploy:
+  #   needs: [coverage]
+  #   runs-on: ubuntu-latest
+  #   environment: GoBid
+  #   steps:
+  #     - uses: actions/checkout@v3
+
+  #     - name: Confire AWS Credentials
+  #       uses: aws-actions/configure-aws-credentials@v2
+  #       with:
+  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         aws-secret-access-key-id: ${{ secrets.AWS_SECRET_ACCESS_KEY_ID }}
+  #         aws-regin: ${{ env.AWS_REGION }}
+
+  #     - name: Login in AWS ECR
+  #       run: |
+  #         aws ecr get-login-password --region $AWS_REGION | \
+  #         docker login --username AWS --password-stdin $ECR_REPO
+
+  #     - name: Tag and push of image to ECR
+  #       run: |
+  #         docker tag $APP_NAME:$ImAGE_TAG $ECR_REPO/$APP_NAME:$IMAGE_TAG
+  #         docker push $ECR_REPO/$APP_NAME:$IAMGE_TAG
+
+  #     - name: Update APP Runner
+  #       run: |
+  #         aws apprunner update-service \
+  #           --service-arn: $SERVICE_ARN \
+  #           --source-configuration file://apprunner-config.json \
+  #           -- region $AWS_REGION
