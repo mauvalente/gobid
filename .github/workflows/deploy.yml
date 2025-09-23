@@ -91,13 +91,16 @@ jobs:
   #       uses: aws-actions/configure-aws-credentials@v2
   #       with:
   #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         aws-secret-access-key-id: ${{ secrets.AWS_SECRET_ACCESS_KEY_ID }}
+  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   #         aws-regin: ${{ env.AWS_REGION }}
 
   #     - name: Login in AWS ECR
   #       run: |
   #         aws ecr get-login-password --region $AWS_REGION | \
   #         docker login --username AWS --password-stdin $ECR_REPO
+
+  #     - name: Build App image
+  #       run: docker build -t $APP_NAME:$IAMGE_TAG -f Dockerfile.prod .
 
   #     - name: Tag and push of image to ECR
   #       run: |
